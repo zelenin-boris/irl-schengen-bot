@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Deploy code to Lambda
-      uses: mariamrf/py-lambda-action@v1.0.0
+      uses: kohrongying/py-lambda-action@v1.0.3
       with:
         lambda_layer_arn: 'arn:aws:lambda:eu-west-1:907146102603:layer:irl-schengen-layer'
         lambda_function_name: 'irl-schengen-bot'
