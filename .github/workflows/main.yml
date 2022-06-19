@@ -14,6 +14,7 @@ jobs:
       with:
         lambda_layer_arn: 'arn:aws:lambda:eu-west-1:907146102603:layer:irl-schengen-layer'
         lambda_function_name: 'irl-schengen-bot'
+        exclude_files: 'README.md'
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
