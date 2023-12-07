@@ -1,15 +1,24 @@
-import telebot
-import os
+from parse_bash import get_quote
+from telegram import send
+from notifications import get_nyc_move_string
+from notifications import get_doggo_birthday_string
 
-TRIBE_CHAT_ID = os.environ['TRIBE_CHAT_ID']
-BOT_TOKEN = os.environ['BOT_TOKEN']
-
-bot = telebot.TeleBot(BOT_TOKEN, parse_mode=None)
 
 def lambda_handler(event, context):
-    bot.send_message(TRIBE_CHAT_ID, "TEST")
+    quote = get_quote()
 
-    return {
-        'statusCode': 200,
-        'body': "Message sent"
+    # send(quote["text"])
+    # delete(quote["quote_id"])
+
+    send(quote)
+    send(get_nyc_move_string())
+
+    doggo = get_doggo_birthday_string()
+    if doggo:
+        send(doggo)
+
+    response = {
+        'statusCode': 200
     }
+
+    return response
