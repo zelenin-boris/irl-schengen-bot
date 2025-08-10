@@ -1,4 +1,5 @@
 from datetime import date
+from dateutil.relativedelta import relativedelta
 
 
 def days_to_string(days):
@@ -33,20 +34,16 @@ def years_to_string(years):
 
 def date_delta_to_string(start, pre_text="", post_text="", yearly_message=""):
     today = date.today()
+    difference = relativedelta(today, start)
 
-    full_months = 12 * (today.year - start.year) + today.month - start.month
-    this_year_months = today.month - start.month
-
-    years = years_to_string(today.year - start.year)
-
-    if (today.day == start.day) & (full_months / 12 > 0) & (
-            full_months % 12 == 0):
-        return pre_text + years + post_text + yearly_message
+    if (today.day == start.day) & (difference.years > 0) & (difference.months == 0):
+        return pre_text + str(difference.years) + post_text + yearly_message
     else:
         result = pre_text
-        if today.year - start.year > 0:
-            result += years + " и "
-        result += months_to_string(this_year_months)
+        if difference.years > 0:
+            result += str(difference.years) + " и "
+        if difference.months > 0:
+            result += months_to_string(difference.months)
         result += " (" + days_to_string((start - today).days) + ")"
         result += post_text
 
@@ -63,8 +60,7 @@ def get_nyc_move_string():
     elif days_delta == 1:
         return "Завтра мы перезжаем в Нью-Йорк!!!"
     elif days_delta > 1:
-        return "До переезда в Нью-Йорк осталось " + days_to_string(
-                days_delta) + "!"
+        return "До переезда в Нью-Йорк осталось " + days_to_string(days_delta) + "!"
     else:
         return date_delta_to_string(
                 start=move,
@@ -86,5 +82,5 @@ def get_doggo_birthday_string():
                 yearly_message=" Поздравьте именинницу!"
         )
 
-# get_nyc_move_string()
-# get_dog_birthday_string()
+# print(get_nyc_move_string())
+# print(get_doggo_birthday_string())
