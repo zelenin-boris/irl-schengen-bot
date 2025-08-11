@@ -1,0 +1,11 @@
+LXML has some issue working on AWS Lambda out of the box, so we need to build certain way.
+manylinux2014_x86_64 makes sure it is compatible with AWS
+
+1. Run `pip install --platform manylinux2014_x86_64 --target python -r requirements.txt --python-version 3.13 --only-binary=:all:`
+2. Run `zip -r9 lxml_layer.zip python`
+3. Upload zip file to AWS Layers selecting x86 and python 3.13 support
+
+
+For local installation:
+1. Run `cat requirements.txt | cut -f1 -d= | xargs pip install -U`
+2. Run `pip freeze > requirements.txt`
